@@ -1,18 +1,26 @@
 {
   "name": "choosy-js",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Custom Dropdown",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prestart": "rm -rf dist",
+    "start": "parcel src/index.js",
+    "prebuild": "rm -rf dist",
+    "build": "parcel build src/index.js --public-url . --no-source-maps"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oabisourour/chooser.git"
+    "url": "git+https://github.com/oabisourour/choosy-js"
   },
-  "author": "abisourour.othmane@gmail.com",
+  "author": "Othmane Abisourour <abisourour.othmane@gmail.com>",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/oabisourour/chooser/issues"
+  "dependencies": {
+    "autoprefixer": "^9.7.1",
+    "postcss-modules": "^1.4.1",
+    "postcss-nested": "^4.2.1"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
   }
 }
