@@ -3,7 +3,7 @@ import styles from './style.css';
 export default class Choosy {
     constructor(target) {
         if(!target) {
-            console.error("Defining a 'selector' for the 'Choosy' is mondatory");
+            console.error("Error: The target 'id' is missing!");
             return;
         }
         this.container = document.getElementById(target);
@@ -109,16 +109,17 @@ export default class Choosy {
      * Render the choosy's layout
      * @param {*} data
      */
-    render(data, initKey = null, parentKey = null) {
-        let list = data;
+    render({data, defaultValue = null}) {
+        const [args] = arguments;
+        if(!args.hasOwnProperty('data')) {
+            console.error("Error: The 'data' property is missing!");
+            return;
+        }
         let key;
         let name = '';
 
-        if(parentKey) {
-            list = list[parentKey];
-        }
-        if(initKey) {
-            [{ key, name } = option] = this.getOptionByKey(list, initKey);
+        if(defaultValue) {
+            [{ key, name } = option] = this.getOptionByKey(data, defaultValue);
         }
 
         return `
@@ -127,7 +128,7 @@ export default class Choosy {
                 <div class="${styles.placeholder}">${name}</div>
                 <div class="${styles.optionList}">
                     ${
-                        list && list.map(option => {
+                        data && data.map(option => {
                             const selected = option.key === key ? styles.itemSelected : ''
 
                             return `

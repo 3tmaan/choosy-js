@@ -8,15 +8,37 @@
 
 ## Usage
 
+### Import the module
+
 ```JS
 import Choosy from 'choosy-js';
+````
 
-// Create a new instance from Choosy
-const choosyDropDown = new Choosy('<target-selector>');
+### Create a new instance with the target ID selector
 
-// Call Choosy's render method with a given data as parameter
-const renderer = choosyDropDown.render('<data-to-populate-your-choosy>');
+```JS
+const choosyDropDown = new Choosy('<target-id>');
+```
 
-// Append to an element in the DOM
+### Call the module's render method with a given data
+
+```JS
+const renderer = choosyDropDown.render({
+    data: '<data-to-populate-choosy>'
+});
+```
+
+In case you want to have a defaut value to be selected by default, you just need to add `defaultValue` property to the render method and pass your value.
+
+```JS
+const renderer = choosyDropDown.render({
+    data: '<data-to-populate-choosy>',
+    defaultValue: '<default-value>',
+});
+```
+
+### Append to an element in the DOM
+
+```JS
 document.getElementById('<target-selector>').innerHTML = renderer;
 ```
