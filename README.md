@@ -11,7 +11,12 @@
 ```JS
 import Choosy from 'choosy-js';
 
-const ChoosyDropDown = new Choosy('<target-selector>');
+// Create a new instance from Choosy
+const choosyDropDown = new Choosy('<target-selector>');
 
-document.getElementById('<target-selector>').innerHTML = ChoosyDropDown.render('<data-to-populate-your-choosy>');
+// Call Choosy's render method with a given data as parameter
+const renderer = choosyDropDown.render('<data-to-populate-your-choosy>');
+
+// Append to an element in the DOM
+document.getElementById('<target-selector>').innerHTML = renderer;
 ```
