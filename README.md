@@ -28,11 +28,20 @@ const renderer = choosyDropDown.render({
 });
 ```
 
+`Choosy` is expecting **id** and **label** as default properties of the object data. Nevertheless, you can define your custom properties in order to match your object data, e.g.:
+
+```JS
+const renderer = choosyDropDown.render({
+    ...
+    properties: ['key', 'value'],
+});
+```
+
 In case you want to have a defaut value to be selected by default, you just need to add `defaultValue` property to the render method and pass your value.
 
 ```JS
 const renderer = choosyDropDown.render({
-    data: '<data-to-populate-choosy>',
+    ...
     defaultValue: '<default-value>',
 });
 ```

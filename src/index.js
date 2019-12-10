@@ -24,15 +24,6 @@ export default class Choosy {
     }
 
     /**
-     * To filter the given list by key
-     * @param {*} list
-     * @param {*} key
-     */
-    getOptionByKey(list, key) {
-        return list.filter((option) => option.key === key);
-    }
-
-    /**
      * To handle the click events on the choosy
      * @param {*} event.target
      */
@@ -107,33 +98,40 @@ export default class Choosy {
 
     /**
      * Render the choosy's layout
-     * @param {*} data
+     * @param {objet} object.data
+     * @param {array} object.properties
+     * @param {string} object.defaultValue
      */
-    render({data, defaultValue = null}) {
+    render({data, properties = ['id', 'label'], defaultValue = null}) {
         const [args] = arguments;
+
         if(!args.hasOwnProperty('data')) {
             console.error("Error: The 'data' property is missing!");
-            return;
+            return '';
         }
-        let key;
-        let name = '';
+
+        const [idKey, labelKey] = properties;
+        let idVal = '', labelValue = '';
 
         if(defaultValue) {
-            [{ key, name } = option] = this.getOptionByKey(data, defaultValue);
+            const [option] = data.filter((option) => option[idKey] === defaultValue);
+
+            idVal = option[idKey];
+            labelValue = option[labelKey];
         }
 
         return `
-            <input type="hidden" name="${this.container.id}" value="${name}">
+            <input type="hidden" name="${this.container.id}" value="${idVal}">
             <div class="${styles.choosy}">
-                <div class="${styles.placeholder}">${name}</div>
+                <div class="${styles.placeholder}">${labelValue}</div>
                 <div class="${styles.optionList}">
                     ${
                         data && data.map(option => {
-                            const selected = option.key === key ? styles.itemSelected : ''
+                            const selected = option[idKey] === idVal ? styles.itemSelected : ''
 
                             return `
-                                <div class="${styles.item} ${selected}" data-key="${option.key}">
-                                    ${option.name}
+                                <div class="${styles.item} ${selected}" data-key="${option[idKey]}">
+                                    ${option[labelKey]}
                                 </div>`
                             }
                         ).join("")
