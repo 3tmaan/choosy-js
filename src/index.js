@@ -1,142 +1,89 @@
-import styles from './style.css';
+import './index.css';
+
+const styles = {
+    choosy: "choosy",
+    choosyExpanded: "choosyExpanded",
+    optionList: "optionList",
+    placeholder: "placeholder",
+    item: "item",
+    itemSelected: "itemSelected"
+}
 
 export default class Choosy {
     constructor(target) {
         if(!target) {
-            console.error("Error: The target 'id' is missing!");
-            return;
+            throw new Error("Error: The target 'id' is missing!");
         }
         this.container = document.getElementById(target);
-        // This binding is necessary to make `this` work in the callback
-        this.container.addEventListener('click', this.handleClick.bind(this));
-    }
-
-    /**
-     * To scroll the element's parent container
-     * to keep the selected option always visible
-     * @param {element} selectedOption
-     */
-    scrollToOption(selectedOption) {
-        if(!selectedOption) {
-            return;
-        }
-        selectedOption.scrollIntoView();
+        document.addEventListener("mousedown", this.handleClick.bind(this))
     }
 
     /**
      * To handle the click events on the choosy
-     * @param {*} event.target
+     * @param {*} {target}
      */
     handleClick({ target }) {
-        const choosy = target.closest(`.${styles.choosy}`);
+        const choosy = this.container.querySelector(`.${styles.choosy}`)
+        const prevOption = choosy && choosy.querySelector(`.${styles.itemSelected}`);
 
-        if(choosy) {
-            const placeholder = choosy.querySelector(`.${styles.placeholder}`);
-            const prevOption = choosy.querySelector(`.${styles.itemSelected}`);
-            const prevOptionkey = prevOption && prevOption.dataset.key || '';
-
-            if(target.classList.contains(styles.placeholder)) {
-                this.toggle(choosy, prevOption);
-            }
+        if (this.container.contains(target)) {
+            const input = this.container.firstElementChild;
+            const placeholder = choosy.querySelector(`.${styles.placeholder}`)
 
             if(target.classList.contains(styles.item)) {
-                this.close(choosy);
-
-                const currentOption = {
+                const newOption = {
                     key: target.dataset.key,
                     label: target.innerText.trim()
-                }
-
-                if(prevOptionkey === currentOption.key) {
-                    return;
                 }
 
                 prevOption && prevOption.classList.remove(styles.itemSelected);
                 target.classList.add(styles.itemSelected);
 
-                placeholder.innerHTML = currentOption.label;
-                this.container.firstElementChild.value = currentOption.key;
+                input.value = newOption.key;
+                placeholder.innerHTML = newOption.label;
             }
+            choosy.classList.toggle(styles.choosyExpanded);
+            prevOption && prevOption.scrollIntoView();
+        } else {
+            choosy && choosy.classList.remove(styles.choosyExpanded)
         }
     }
 
     /**
-     * Expand/show the choosy list and scroll
-     * to the selected option
-     * @param {element} choosy
-     * @param {element} selectedItem
+     * Render Choosy's layout
+     * @param {objet} {options}
+     * @param {array} {properties}
+     * @param {string} {initialValue}
      */
-    expand(choosy, selectedItem) {
-        choosy.classList.add(styles.choosyExpanded);
-        this.scrollToOption(selectedItem);
-    }
-
-    /**
-     * Close the choosy list
-     * @param {element} choosy
-     */
-    close(choosy) {
-        choosy.classList.remove(styles.choosyExpanded)
-    }
-
-    /**
-     * Toggle (show/hide) the choosy list
-     * @param {element} choosy
-     * @param {element} selectedItem
-     */
-    toggle(choosy, selectedItem) {
-        const expanded = document.querySelector(`.${styles.choosyExpanded}`);
-
-        if(choosy.classList.contains(styles.choosyExpanded) || expanded && expanded.classList.remove(styles.choosyExpanded)) {
-            this.close(choosy);
-
-            return;
-        }
-
-        this.expand(choosy, selectedItem);
-    }
-
-    /**
-     * Render the choosy's layout
-     * @param {objet} object.data
-     * @param {array} object.properties
-     * @param {string} object.defaultValue
-     */
-    render({data, properties = ['id', 'label'], defaultValue = null}) {
+    render({options, properties = ['id', 'label'], initialValue = null}) {
         const [args] = arguments;
 
-        if(!args.hasOwnProperty('data')) {
-            console.error("Error: The 'data' property is missing!");
-            return '';
+        if(!args.hasOwnProperty('options')) {
+            throw new Error("Error: The 'options' property is missing!");
         }
 
         const [idKey, labelKey] = properties;
         let idVal = '', labelValue = '';
 
-        if(defaultValue) {
-            const [option] = data.filter((option) => option[idKey] === defaultValue);
+        if(initialValue) {
+            const [option] = options.filter((option) => option[idKey] === initialValue);
 
             idVal = option[idKey];
             labelValue = option[labelKey];
         }
 
-        return `
-            <input type="hidden" name="${this.container.id}" value="${idVal}">
-            <div class="${styles.choosy}">
-                <div class="${styles.placeholder}">${labelValue}</div>
-                <div class="${styles.optionList}">
-                    ${
-                        data && data.map(option => {
-                            const selected = option[idKey] === idVal ? styles.itemSelected : ''
+        const template = `<input type="hidden" name="${this.container.id}" value="${idVal}">
+        <div class="${styles.choosy}">
+            <div class="${styles.placeholder}">${labelValue}</div>
+            <div class="${styles.optionList}">
+                ${
+                    options && options.map(option => `
+                        <div class="${styles.item} ${option[idKey] === idVal && styles.itemSelected}" data-key="${option[idKey]}">${option[labelKey]}</div>`
+                    ).join('')
+                }
+            </div>
+        </div>`;
 
-                            return `
-                                <div class="${styles.item} ${selected}" data-key="${option[idKey]}">
-                                    ${option[labelKey]}
-                                </div>`
-                            }
-                        ).join("")
-                    }
-                </div>
-            </div>`
+        this.container.innerHTML = template;
     };
 }

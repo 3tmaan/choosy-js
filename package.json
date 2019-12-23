@@ -1,6 +1,6 @@
 {
   "name": "choosy-js",
-  "version": "1.1.1",
+  "version": "1.2.1",
   "description": "Custom Dropdown",
   "main": "./src/index.js",
   "scripts": {
@@ -15,11 +15,12 @@
   "author": "Othmane Abisourour <abisourour.othmane@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "parcel-bundler": "^1.12.4"
   },
   "peerDependencies": {
     "autoprefixer": "^9.7.1",
-    "postcss-modules": "^1.4.1",
     "postcss-nested": "^4.2.1"
   }
 }

@@ -21,8 +21,7 @@
     &Expanded {
 
         &:after {
-            -webkit-transform: rotate(180deg);
-                    transform: rotate(180deg);
+            transform: rotate(180deg);
         }
 
         .optionList {

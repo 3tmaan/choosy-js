@@ -12,42 +12,40 @@
 
 ```JS
 import Choosy from 'choosy-js';
-````
+```
 
 ### Create a new instance with the target ID selector
 
 ```JS
-const choosyDropDown = new Choosy('<target-id>');
+const choosyDropDown = new Choosy('[target-id]');
 ```
 
-### Call the module's render method with a given data
+> `[target-id]` is the parent element's ID where **Choosy** will be injected into.
+
+### Call the module's render method with a given options data
 
 ```JS
-const renderer = choosyDropDown.render({
-    data: '<data-to-populate-choosy>'
+choosyDropDown.render({
+    options: '[options-data]'
 });
 ```
 
-`Choosy` is expecting **id** and **label** as default properties of the object data. Nevertheless, you can define your custom properties in order to match your object data, e.g.:
+> `[options-data]` is *mondatory* and it matches the JSON data needed to set the **Choosy** options list.
+
+**Choosy** is expecting `id` and `label` as default properties for the JSON object. Nonetheless, you can define your custom properties in order to match your object, e.g.:
 
 ```JS
-const renderer = choosyDropDown.render({
+choosyDropDown.render({
     ...
     properties: ['key', 'value'],
 });
 ```
 
-In case you want to have a defaut value to be selected by default, you just need to add `defaultValue` property to the render method and pass your value.
+In case you want to have an **initial value** to be selected by default by **Choosy**, you just need to define `initialValue` property to the render method and pass your value.
 
 ```JS
-const renderer = choosyDropDown.render({
+choosyDropDown.render({
     ...
-    defaultValue: '<default-value>',
+    initialValue: '[initial-value]',
 });
-```
-
-### Append to an element in the DOM
-
-```JS
-document.getElementById('<target-selector>').innerHTML = renderer;
 ```
