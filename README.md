@@ -2,6 +2,10 @@
 
 `choosy-js` is a Custom Dropdown component for Javascript.
 
+Check an example [here](https://codesandbox.io/s/choosy-jsdemo-x3c6d?fontsize=14&hidenavigation=1&module=%2Fmain.js&theme=dark)
+
+---
+
 ## Installation
 
 `npm i choosy-js`

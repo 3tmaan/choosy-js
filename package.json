@@ -1,12 +1,10 @@
 {
   "name": "choosy-js",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Custom Dropdown",
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "start": "rm -rf dist && parcel src/index.js",
-    "prebuild": "rm -rf dist",
-    "build": "parcel build src/index.js --public-url . --no-source-maps"
+    "build": "gulp"
   },
   "repository": {
     "type": "git",
@@ -17,10 +15,16 @@
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
-    "parcel-bundler": "^1.12.4"
-  },
-  "peerDependencies": {
-    "autoprefixer": "^9.7.1",
+    "autoprefixer": "^9.7.3",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-postcss": "^8.0.0",
+    "gulp-uglify": "^3.0.2",
     "postcss-nested": "^4.2.1"
-  }
+  },
+  "keywords": [
+    "javascript",
+    "custom-dropdown"
+  ]
 }
