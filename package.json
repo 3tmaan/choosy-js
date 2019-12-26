@@ -1,6 +1,6 @@
 {
   "name": "choosy-js",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Custom Dropdown",
   "main": "./dist/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oabisourour/choosy-js"
+    "url": "git+https://github.com/3tmaan/choosy-js"
   },
   "author": "Othmane Abisourour <abisourour.othmane@gmail.com>",
   "license": "ISC",
